@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 import TarotReading from '@/components/TarotReading';
+import NumerologyCalculator from '@/components/NumerologyCalculator';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const Index = () => {
@@ -31,14 +32,16 @@ const Index = () => {
       title: 'Нумерология',
       description: 'Анализ жизненного пути через числа',
       price: 'от 2500 ₽',
-      hasOnline: false
+      hasOnline: true,
+      type: 'numerology'
     },
     {
       icon: 'Sparkles',
       title: 'Таро',
       description: 'Расклады на важные жизненные вопросы',
       price: 'от 2000 ₽',
-      hasOnline: true
+      hasOnline: true,
+      type: 'tarot'
     }
   ];
 
@@ -116,15 +119,17 @@ const Index = () => {
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button variant="outline" className="w-full">
-                          <Icon name="Sparkles" className="mr-2 h-4 w-4" />
+                          <Icon name={service.type === 'tarot' ? 'Sparkles' : 'Calculator'} className="mr-2 h-4 w-4" />
                           Попробовать онлайн
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
                         <DialogHeader>
-                          <DialogTitle className="text-2xl">Онлайн расклад Таро</DialogTitle>
+                          <DialogTitle className="text-2xl">
+                            {service.type === 'tarot' ? 'Онлайн расклад Таро' : 'Нумерологический калькулятор'}
+                          </DialogTitle>
                         </DialogHeader>
-                        <TarotReading />
+                        {service.type === 'tarot' ? <TarotReading /> : <NumerologyCalculator />}
                       </DialogContent>
                     </Dialog>
                   )}
