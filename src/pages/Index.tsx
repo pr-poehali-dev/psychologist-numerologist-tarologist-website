@@ -5,6 +5,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import TarotReading from '@/components/TarotReading';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const Index = () => {
   const { toast } = useToast();
@@ -21,19 +23,22 @@ const Index = () => {
       icon: 'Eye',
       title: 'Психологические консультации',
       description: 'Индивидуальный подход к решению личных проблем',
-      price: 'от 3000 ₽'
+      price: 'от 3000 ₽',
+      hasOnline: false
     },
     {
       icon: 'Hash',
       title: 'Нумерология',
       description: 'Анализ жизненного пути через числа',
-      price: 'от 2500 ₽'
+      price: 'от 2500 ₽',
+      hasOnline: false
     },
     {
       icon: 'Sparkles',
       title: 'Таро',
       description: 'Расклады на важные жизненные вопросы',
-      price: 'от 2000 ₽'
+      price: 'от 2000 ₽',
+      hasOnline: true
     }
   ];
 
@@ -105,8 +110,24 @@ const Index = () => {
                   <CardTitle className="text-2xl">{service.title}</CardTitle>
                   <CardDescription className="text-base">{service.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
                   <p className="text-2xl font-bold text-primary">{service.price}</p>
+                  {service.hasOnline && (
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" className="w-full">
+                          <Icon name="Sparkles" className="mr-2 h-4 w-4" />
+                          Попробовать онлайн
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle className="text-2xl">Онлайн расклад Таро</DialogTitle>
+                        </DialogHeader>
+                        <TarotReading />
+                      </DialogContent>
+                    </Dialog>
+                  )}
                 </CardContent>
               </Card>
             ))}
